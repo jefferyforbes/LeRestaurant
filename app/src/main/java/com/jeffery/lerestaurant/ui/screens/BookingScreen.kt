@@ -1,12 +1,11 @@
 package com.jeffery.lerestaurant.ui.screens
 
+import android.widget.DatePicker
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +18,9 @@ import com.jeffery.lerestaurant.ui.navigation.BottomNavGraph
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BookingScreen(paddingValues: PaddingValues, navHostController: NavHostController) {
+
+    val restaurantName = "Le Restaurant"
+
     Scaffold(
         bottomBar = {
             BottomAppBar(contentPadding = paddingValues) {
@@ -35,7 +37,9 @@ fun BookingScreen(paddingValues: PaddingValues, navHostController: NavHostContro
                 .fillMaxSize()
                 .wrapContentSize(Alignment.Center)
         ) {
-            Text(text = "Booking Screen")
+            Row() {
+                Text(text = "Booking Screen")
+            }
         }
     }
 }
