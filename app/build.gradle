@@ -1,0 +1,109 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id("org.jetbrains.kotlin.plugin.serialization") version("1.6.10")
+}
+
+android {
+
+    compileSdk(BuildConfig.compileSdkVersion)
+    buildToolsVersion(BuildConfig.buildToolsVersion)
+
+    defaultConfig {
+        applicationId(BuildConfig.applicationId)
+        minSdk(BuildConfig.minSdkVersion)
+        targetSdk(BuildConfig.targetSdkVersion)
+        versionCode(BuildConfig.versionCode)
+        versionName(BuildConfig.versionName)
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // [packagingOptions] is used to temporarily resolve an compiler error known by Google as
+        // an issue/bue to be fixed in the near future.
+        packagingOptions {
+            exclude 'META-INF/proguard/androidx-annotations.pro'
+            exclude 'META-INF/DEPENDENCIES'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/LICENSE.txt'
+            exclude 'META-INF/license.txt'
+            exclude 'META-INF/NOTICE'
+            exclude 'META-INF/NOTICE.txt'
+            exclude 'META-INF/notice.txt'
+            exclude 'META-INF/ASL2.0'
+            exclude("META-INF/*.kotlin_module")
+            exclude 'META-INF/gradle/incremental.annotation.processors'
+        }
+    }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = BuildConfig.kotlinCompilerExtensionVersion
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    // BASE DEPENDENCIES
+    implementation(BaseDependencies.CORE_KTX)
+    implementation(BaseDependencies.APP_COMPAT)
+    implementation(BaseDependencies.ANDROID_MATERIAL)
+    implementation(BaseDependencies.JUNIT)
+    implementation(BaseDependencies.EXT_JUNIT)
+    implementation(BaseDependencies.ESPRESSO)
+
+    // COROUTINES ANDROID
+    implementation(CoroutinesDependencies.COROUTINES_CORE)
+    implementation(CoroutinesDependencies.COROUTINES_ANDROID)
+    implementation(CoroutinesDependencies.COROUTINES_LIVE_DATA)
+    implementation(CoroutinesDependencies.COROUTINES_LIVE_DATA_RUNTIME)
+    implementation(CoroutinesDependencies.COROUTINES_VIEWMODEL_KTX)
+
+    // COMPOSE
+    implementation(ComposeDependencies.COMPOSE_UI)
+    implementation(ComposeDependencies.COMPOSE_MATERIAL)
+    implementation(ComposeDependencies.COMPOSE_UI_TOOLING)
+    implementation(ComposeDependencies.COMPOSE_ACTIVITY)
+    implementation(ComposeDependencies.COMPOSE_NAVIGATION)
+    implementation(ComposeDependencies.COMPOSE_VIEWMODEL)
+
+    // RETROFIT
+    implementation(RetroFitDependencies.GSON)
+    implementation(RetroFitDependencies.RETROFIT2)
+    implementation(RetroFitDependencies.GSON_CONVERTER)
+    implementation(RetroFitDependencies.OKHTTP)
+    implementation(RetroFitDependencies.OKHTTP_LOGGING)
+
+    // DAGGER
+    implementation(DaggerDependencies.DAGGER_ANDROID)
+    kapt(DaggerDependencies.DAGGER_COMPILER)
+    implementation(DaggerDependencies.HILT)
+    implementation(DaggerDependencies.HILT_COMPILER)
+    implementation(DaggerDependencies.HILT_COMPOSE_NAVIGATION)
+
+    // ROOM
+    implementation(AdditionalDependencies.ROOM_KTX)
+    annotationProcessor(AdditionalDependencies.ROOM_ANNOTATION_PROCESSOR)
+    kapt(AdditionalDependencies.ROOM_ANNOTATION_PROCESSOR)
+
+    // SERIALIZATION
+    implementation(AdditionalDependencies.SERIALIZATION)
+}
