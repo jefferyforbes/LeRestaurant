@@ -13,12 +13,14 @@ import com.jeffery.lerestaurant.ui.screens.currentOrder.CurrentOrderScreen
 import com.jeffery.lerestaurant.ui.screens.login.LoginScreen
 import com.jeffery.lerestaurant.ui.screens.mainScreen.MainScreen
 import com.jeffery.lerestaurant.ui.screens.menu.MenuScreen
+import com.jeffery.lerestaurant.ui.screens.menu.MenuViewModel
 import com.jeffery.lerestaurant.ui.screens.register.RegisterScreen
 
 fun NavGraphBuilder.baseNav(
     navController: NavController,
     paddingValues: PaddingValues,
-    application: Application
+    application: Application,
+    menuViewModel: MenuViewModel
 ) {
     navigation(
         startDestination = Screens.MainScreen.route, // Should be login after testing
@@ -40,7 +42,8 @@ fun NavGraphBuilder.baseNav(
             MenuScreen(
                 paddingValues,
                 navController,
-                application.applicationContext
+                application.applicationContext,
+                menuViewModel
             )
         }
 

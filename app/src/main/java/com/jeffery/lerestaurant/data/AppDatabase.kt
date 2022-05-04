@@ -1,10 +1,12 @@
 package com.jeffery.lerestaurant.data
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.google.gson.Gson
 import com.jeffery.lerestaurant.data.dao.MenuDao
 import com.jeffery.lerestaurant.data.dao.OrderDao
 import com.jeffery.lerestaurant.data.dao.OrderItemDao
@@ -15,6 +17,9 @@ import com.jeffery.lerestaurant.data.entities.OrderItem
 import com.jeffery.lerestaurant.data.entities.User
 import com.jeffery.lerestaurant.domain.CourseType
 import com.jeffery.lerestaurant.util.Converters
+import java.io.FileReader
+import java.io.IOException
+import javax.inject.Inject
 
 @Database(
     entities = [User::class, MenuItem::class, Order::class, OrderItem::class],
@@ -29,6 +34,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun orderItemDao() : OrderItemDao
 
     companion object {
+
+        private val gson = Gson()
 
         @Volatile
         private var INSTANCE: AppDatabase? = null

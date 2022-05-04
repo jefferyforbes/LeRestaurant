@@ -12,13 +12,14 @@ import com.jeffery.lerestaurant.ui.screens.ContactScreen
 import com.jeffery.lerestaurant.ui.screens.currentOrder.CurrentOrderScreen
 import com.jeffery.lerestaurant.ui.screens.mainScreen.MainScreen
 import com.jeffery.lerestaurant.ui.screens.menu.MenuScreen
+import com.jeffery.lerestaurant.ui.screens.menu.MenuViewModel
 
 @Composable
-@Deprecated("Just use appnav and base nav")
 fun BottomNavGraph(
     paddingValues: PaddingValues,
     navController: NavController,
-    application: Application
+    application: Application,
+    menuViewModel: MenuViewModel
 ) {
     navController as NavHostController
     NavHost(
@@ -31,7 +32,8 @@ fun BottomNavGraph(
             MenuScreen(
                 paddingValues,
                 navController,
-                application.applicationContext
+                application.applicationContext,
+                menuViewModel
             )
         }
         composable(BottomBarScreens.Order.route) {

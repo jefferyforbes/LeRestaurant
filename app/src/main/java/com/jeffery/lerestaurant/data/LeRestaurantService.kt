@@ -12,6 +12,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface LeRestaurantService {
 
+    // This is extremely coupled with a god interface,
+    // this should be separated into various interfaces
+
     suspend fun login(username: String, password: String): Flow<ResponseState>
 
     suspend fun register(user: User): User
@@ -35,14 +38,4 @@ interface LeRestaurantService {
     fun setCurrentUsername(username: String)
 
     suspend fun deleteAllItemsInDb()
-
-    fun updateMenuItemCount(count: Int, menuItemId: Int)
-
-    fun getAllCurrentOrders(): Flow<List<OrderItem>>
-
-    fun addCurrentOrderItem(orderItem: OrderItem)
-
-    fun removeCurrentOrder()
-
-    fun removeOneOrderItem(orderItem: OrderItem)
 }

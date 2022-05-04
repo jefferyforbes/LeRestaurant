@@ -4,27 +4,24 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.jeffery.lerestaurant.data.entities.OrderItem
+import com.jeffery.lerestaurant.data.entities.MenuItem
 import com.jeffery.lerestaurant.ui.components.BottomNavbar
-import com.jeffery.lerestaurant.ui.theme.AdditionalShapes
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun CurrentOrderScreen(paddingValues: PaddingValues, navHostController: NavHostController) {
+fun CurrentOrderScreen(
+    paddingValues: PaddingValues,
+    navHostController: NavHostController,
+) {
     val modifier = Modifier
-    val viewModel: CurrentOrderViewModel = hiltViewModel()
-    val state = viewModel.currentOrderState.value
-    var items = viewModel.currentOrderList
+    val currentOrderViewModel: CurrentOrderViewModel = hiltViewModel()
+    val state by currentOrderViewModel.state.collectAsState()
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -41,32 +38,18 @@ fun CurrentOrderScreen(paddingValues: PaddingValues, navHostController: NavHostC
             modifier = modifier
                 .fillMaxSize()
         ) {
-            CurrentOrderView(modifier, viewModel, items)
-        }
-    }
+            CurrentOrderView(
+                modifier,
+                currentOrderViewModel,
+                state.items,
 
-    when (state) {
-        // TODO: Add snack bar toast for empty fields and max items state
-        CurrentOrderViewModel.CurrentOrderState.EmptyFields -> {
-            Unit
-        }
-        CurrentOrderViewModel.CurrentOrderState.Idle -> {
-            Unit
-        }
-        CurrentOrderViewModel.CurrentOrderState.Loading -> {
-            viewModel.refresh()
-        }
-        CurrentOrderViewModel.CurrentOrderState.MaxCurrentItems -> {
-            Unit
-        }
-        CurrentOrderViewModel.CurrentOrderState.Content -> {
-            items = viewModel.currentOrderList
+            )
         }
     }
 }
 
 @Composable
-fun CurrentOrderView(modifier: Modifier, viewModel: CurrentOrderViewModel, items: List<OrderItem>) {
+fun CurrentOrderView(modifier: Modifier, viewModel: CurrentOrderViewModel, items: List<MenuItem>) {
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -74,11 +57,11 @@ fun CurrentOrderView(modifier: Modifier, viewModel: CurrentOrderViewModel, items
         modifier = modifier
             .wrapContentSize()
             .fillMaxWidth()
-            .padding(top = 2.dp)
+            .padding(top = 8.dp)
     ) {
         items.forEach { item ->
-            CurrentOrderItemView(item, viewModel)
-            Spacer(modifier = modifier.padding(6.dp))
+            CurrentOrderItemView(item)
+            Spacer(modifier = modifier.padding(8.dp))
         }
         Button(onClick = { viewModel.saveOrder() }) {
             Text(text = "Save Order")
@@ -87,7 +70,7 @@ fun CurrentOrderView(modifier: Modifier, viewModel: CurrentOrderViewModel, items
 }
 
 @Composable
-fun CurrentOrderItemView(item: OrderItem, viewModel: CurrentOrderViewModel) {
+fun CurrentOrderItemView(item: MenuItem) {
     val modifier = Modifier
     Card(
         modifier = modifier
@@ -96,8 +79,8 @@ fun CurrentOrderItemView(item: OrderItem, viewModel: CurrentOrderViewModel) {
         ) {
         Column(
             modifier = modifier
-                .wrapContentSize()
-                .padding(12.dp),
+                .width(280.dp)
+                .padding(14.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -109,7 +92,6 @@ fun CurrentOrderItemView(item: OrderItem, viewModel: CurrentOrderViewModel) {
                 Text(text = "Item name: ")
                 Text(text = item.name)
             }
-
             Row {
                 Text(text = "Item price: ")
                 Text(text = "£" + item.price)

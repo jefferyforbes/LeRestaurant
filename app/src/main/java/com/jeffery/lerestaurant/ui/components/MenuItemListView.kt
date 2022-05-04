@@ -7,14 +7,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.jeffery.lerestaurant.data.entities.MenuItem
 import com.jeffery.lerestaurant.ui.screens.menu.MenuViewModel
 
 @Composable
-fun MenuItemListView(modifier: Modifier, context: Context, viewModel: MenuViewModel) {
-    val state = viewModel.menuState.value
-    var menuList = viewModel.allMenuItems
+fun MenuItemListView(
+    modifier: Modifier,
+    context: Context,
+    viewModel: MenuViewModel,
+    menuList: List<MenuItem>
+) {
 
     Box(
         contentAlignment = Alignment.Center,
@@ -28,21 +38,11 @@ fun MenuItemListView(modifier: Modifier, context: Context, viewModel: MenuViewMo
                     modifier = modifier,
                     menuItem = menuItem,
                     context,
-                    viewModel
+                    viewModel,
+                    { menuItem.menuItemId?.let { viewModel.interactWithMenuItem(it) } },
+                    { viewModel.refresh() }
                 )
             }
-        }
-    }
-
-    when (state) {
-        MenuViewModel.MenuListState.Content -> {
-            menuList = viewModel.allMenuItems
-        }
-        MenuViewModel.MenuListState.Idle -> {
-            Unit
-        }
-        MenuViewModel.MenuListState.Loading -> {
-            viewModel.refresh()
         }
     }
 }

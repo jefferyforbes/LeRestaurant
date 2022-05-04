@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 data class MenuItem(
     val course: String,
     val name: String,
-    val itemCount: Int = 0,
+    var itemCount: Int = 0,
     val price: Double,
     val stock: Int
 ) {

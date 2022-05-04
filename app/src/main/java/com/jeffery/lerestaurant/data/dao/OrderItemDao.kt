@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface OrderItemDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addNewOrderItem(orderItem: OrderItem)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Transaction
+    suspend fun addNewOrderItem(orderItem: OrderItem)
 
     @Query("SELECT * FROM orderitem")
     fun getAllOrderItems(): Flow<List<OrderItem>>
