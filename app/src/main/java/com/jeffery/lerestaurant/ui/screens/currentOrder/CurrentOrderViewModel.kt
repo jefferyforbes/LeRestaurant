@@ -81,9 +81,9 @@ class CurrentOrderViewModel @Inject constructor(
 
     private fun getCurrentOrders() {
         viewModelScope.launch {
-            leRestaurantService.observeCurrentOrder().collect { list ->
-                currentOrderState.update { it.copy(isLoading = false, items = list) }
-            }
+//            leRestaurantService.observeCurrentOrder().collect { list ->
+//                currentOrderState.update { it.copy(isLoading = false, items = list) }
+//            }
         }
     }
 
@@ -111,7 +111,7 @@ class CurrentOrderViewModel @Inject constructor(
 
     fun removeAllItems() {
         viewModelScope.launch(Dispatchers.IO) {
-            leRestaurantService.removeCurrentOrder()
+//            leRestaurantService.removeCurrentOrder()
         }
     }
 
