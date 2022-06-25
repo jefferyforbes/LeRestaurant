@@ -1,4 +1,4 @@
-package com.jeffery.lerestaurant.ui.screens
+package com.jeffery.lerestaurant.ui.screens.contact
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi

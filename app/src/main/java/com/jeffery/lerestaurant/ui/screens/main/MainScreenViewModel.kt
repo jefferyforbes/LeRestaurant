@@ -1,4 +1,4 @@
-package com.jeffery.lerestaurant.ui.screens.mainScreen
+package com.jeffery.lerestaurant.ui.screens.main
 
 import android.util.Log
 import androidx.compose.runtime.MutableState
@@ -7,9 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jeffery.lerestaurant.data.LeRestaurantService
 import com.jeffery.lerestaurant.data.entities.Order
-import com.jeffery.lerestaurant.data.entities.OrderItem
-import com.jeffery.lerestaurant.domain.CourseType
-import com.jeffery.lerestaurant.domain.OrderState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch

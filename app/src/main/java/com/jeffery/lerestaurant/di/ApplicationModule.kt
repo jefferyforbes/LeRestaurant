@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.jeffery.lerestaurant.data.AppDatabase
 import com.jeffery.lerestaurant.data.LeRestaurantService
 import com.jeffery.lerestaurant.data.LeRestaurantServiceImpl
+import com.jeffery.lerestaurant.data.repositories.CurrentOrderRepository
+import com.jeffery.lerestaurant.data.repositories.CurrentOrderRepositoryImpl
 import com.jeffery.lerestaurant.data.repositories.MenuRepository
 import com.jeffery.lerestaurant.data.repositories.MenuRepositoryImpl
 import dagger.Module
@@ -46,5 +48,10 @@ class ViewModelModule {
     @Provides
     fun providesMenuRepository(menuRepositoryImpl: MenuRepositoryImpl): MenuRepository {
         return menuRepositoryImpl
+    }
+
+    @Provides
+    fun providesOrderRepository(orderRepositoryImpl: CurrentOrderRepositoryImpl): CurrentOrderRepository {
+        return orderRepositoryImpl
     }
 }

@@ -8,9 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.jeffery.lerestaurant.ui.screens.BookingScreen
-import com.jeffery.lerestaurant.ui.screens.ContactScreen
-import com.jeffery.lerestaurant.ui.screens.currentOrder.CurrentOrderScreen
-import com.jeffery.lerestaurant.ui.screens.mainScreen.MainScreen
+import com.jeffery.lerestaurant.ui.screens.contact.ContactScreen
+import com.jeffery.lerestaurant.ui.screens.currentorder.CurrentOrderScreen
+import com.jeffery.lerestaurant.ui.screens.currentorder.CurrentOrderViewModel
+import com.jeffery.lerestaurant.ui.screens.main.MainScreen
 import com.jeffery.lerestaurant.ui.screens.menu.MenuScreen
 import com.jeffery.lerestaurant.ui.screens.menu.MenuViewModel
 
@@ -19,7 +20,8 @@ fun BottomNavGraph(
     paddingValues: PaddingValues,
     navController: NavController,
     application: Application,
-    menuViewModel: MenuViewModel
+    menuViewModel: MenuViewModel,
+    currentOrderViewModel: CurrentOrderViewModel
 ) {
     navController as NavHostController
     NavHost(

@@ -10,6 +10,7 @@ import com.jeffery.lerestaurant.domain.ResponseState
 import com.jeffery.lerestaurant.domain.TableBooking
 import kotlinx.coroutines.flow.Flow
 
+@Deprecated("Each data entity should have their own single responsibility repositories")
 interface LeRestaurantService {
 
     // This is extremely coupled with a god interface,

@@ -1,7 +1,10 @@
 package com.jeffery.lerestaurant.ui.components
 
 import android.content.Context
+import android.view.animation.BounceInterpolator
 import android.widget.Toast
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -49,10 +52,13 @@ fun MenuItemView(
         modifier = modifier
             .height(170.dp)
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(10.dp, top = 6.dp)
     ) {
-
-        if (openDialog.value) {
+        AnimatedVisibility(
+            visible = openDialog.value,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
             menuItem.menuItemId?.let { viewModel.interactWithMenuItem(it) }
             Dialog(
                 title = "Add item to current order",
@@ -82,14 +88,14 @@ fun MenuItemView(
                 Row(
                     verticalAlignment = Alignment.Top,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = modifier.padding(start = 4.dp, top = 4.dp, bottom = 4.dp, end = 4.dp)
+                    modifier = modifier.padding(4.dp)
                 ) {
                     Text(
                         text = menuItem.name,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = modifier
-                            .padding(start = 4.dp, top = 4.dp, bottom = 4.dp, end = 4.dp)
+                            .padding(4.dp)
                             .weight(7f),
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
@@ -211,6 +217,7 @@ fun DialogText(label: String, text: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier.wrapContentSize(Alignment.Center)
+            .padding( top = 6.dp, bottom = 6.dp)
     ) {
         Text(
             text = label,
@@ -222,7 +229,7 @@ fun DialogText(label: String, text: String) {
         )
         Text(
             text = text,
-            fontSize = 20.sp,
+            fontSize = if (text.length > 14) 16.sp else 20.sp,
             fontStyle = typography.body1.fontStyle,
             fontWeight = FontWeight.Light,
         )

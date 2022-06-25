@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.jeffery.lerestaurant.ui.screens.mainScreen.MainScreenViewModel
+import com.jeffery.lerestaurant.ui.screens.main.MainScreenViewModel
 
 @Composable
 fun OrderListView(viewModel: MainScreenViewModel) {

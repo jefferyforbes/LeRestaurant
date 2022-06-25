@@ -8,10 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.jeffery.lerestaurant.ui.screens.BookingScreen
-import com.jeffery.lerestaurant.ui.screens.ContactScreen
-import com.jeffery.lerestaurant.ui.screens.currentOrder.CurrentOrderScreen
+import com.jeffery.lerestaurant.ui.screens.contact.ContactScreen
+import com.jeffery.lerestaurant.ui.screens.currentorder.CurrentOrderScreen
 import com.jeffery.lerestaurant.ui.screens.login.LoginScreen
-import com.jeffery.lerestaurant.ui.screens.mainScreen.MainScreen
+import com.jeffery.lerestaurant.ui.screens.main.MainScreen
 import com.jeffery.lerestaurant.ui.screens.menu.MenuScreen
 import com.jeffery.lerestaurant.ui.screens.menu.MenuViewModel
 import com.jeffery.lerestaurant.ui.screens.register.RegisterScreen
@@ -47,7 +47,12 @@ fun NavGraphBuilder.baseNav(
             )
         }
 
-        composable(Screens.OrderScreen.route) { CurrentOrderScreen(paddingValues, navController) }
+        composable(Screens.OrderScreen.route) {
+            CurrentOrderScreen(
+                paddingValues,
+                navController
+            )
+        }
 
         composable(Screens.BookingScreen.route) { BookingScreen(paddingValues, navController) }
 

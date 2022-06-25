@@ -1,7 +1,6 @@
 package com.jeffery.lerestaurant.data
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -15,11 +14,8 @@ import com.jeffery.lerestaurant.data.entities.MenuItem
 import com.jeffery.lerestaurant.data.entities.Order
 import com.jeffery.lerestaurant.data.entities.OrderItem
 import com.jeffery.lerestaurant.data.entities.User
-import com.jeffery.lerestaurant.domain.CourseType
 import com.jeffery.lerestaurant.util.Converters
-import java.io.FileReader
-import java.io.IOException
-import javax.inject.Inject
+import java.io.File
 
 @Database(
     entities = [User::class, MenuItem::class, Order::class, OrderItem::class],
@@ -48,7 +44,6 @@ abstract class AppDatabase : RoomDatabase() {
                     "le_restaurant_database"
                 )
                     .allowMainThreadQueries()
-                    .createFromAsset("menuItem2.db")
                     .fallbackToDestructiveMigration()
                     .build()
                 instance

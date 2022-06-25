@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
+@Deprecated("Each data entity should have their own single responsibility repositories")
 class LeRestaurantServiceImpl @Inject constructor(
     application: Application
 ) : LeRestaurantService {

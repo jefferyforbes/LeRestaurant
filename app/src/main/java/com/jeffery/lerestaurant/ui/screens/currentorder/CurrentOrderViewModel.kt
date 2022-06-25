@@ -1,9 +1,11 @@
-package com.jeffery.lerestaurant.ui.screens.currentOrder
+package com.jeffery.lerestaurant.ui.screens.currentorder
 
+import android.util.Log
 import androidx.lifecycle.*
-import com.jeffery.lerestaurant.data.LeRestaurantService
 import com.jeffery.lerestaurant.data.entities.MenuItem
 import com.jeffery.lerestaurant.data.entities.OrderItem
+import com.jeffery.lerestaurant.data.repositories.CurrentOrderRepository
+import com.jeffery.lerestaurant.data.repositories.MenuRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CurrentOrderViewModel @Inject constructor(
-    private val leRestaurantService: LeRestaurantService
+    private val currentOrderRepository: CurrentOrderRepository,
+    private val menuRepository: MenuRepository
 ) : ViewModel() {
 
     interface CurrentOrderUiState {
@@ -63,16 +66,29 @@ class CurrentOrderViewModel @Inject constructor(
     val state = currentOrderState
         .map { it.updateUiState() }
         .stateIn(
-        viewModelScope,
-        SharingStarted.Eagerly,
-        currentOrderState.value.updateUiState()
-    )
+            viewModelScope,
+            SharingStarted.Eagerly,
+            currentOrderState.value.updateUiState()
+        )
 
     //    private var totalPrice: Double = totalPrice()
 
     init {
         currentOrderState.update { it.copy(isLoading = true) }
         getCurrentOrders()
+        currentOrderState.update {
+            it.copy(
+                items = listOf(
+                    MenuItem(
+                        course = "test",
+                        name = "name",
+                        itemCount = 1,
+                        price = 0.0,
+                        stock = 1
+                    )
+                )
+            )
+        }
     }
 
     fun refresh() {
@@ -81,14 +97,17 @@ class CurrentOrderViewModel @Inject constructor(
 
     private fun getCurrentOrders() {
         viewModelScope.launch {
-//            leRestaurantService.observeCurrentOrder().collect { list ->
-//                currentOrderState.update { it.copy(isLoading = false, items = list) }
-//            }
+            menuRepository.observeMenuItems().collect { list ->
+                val itemOrder = list.filter { it.itemCount > 0 }
+                currentOrderState.update { it.copy(isLoading = false, items = list) }
+            }
         }
+        Log.d("Current Test", "Test this")
     }
 
     fun saveOrder() {
         viewModelScope.launch(Dispatchers.IO) {
+            Log.d("works", "test")
         }
     }
 
